@@ -37,3 +37,30 @@ body {
   border: 1px solid #ccc;
   font-size: medium;
 }
+
+.reload-button,
+.previous-button,
+.next-button {
+  color: #fff;
+  font-weight: bold;
+  border-color: #fff;
+  border-width: 2px;
+  border-radius: 7px;
+  background-color: #282c34;
+  padding: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #fff;
+    color: #282c34;
+  }
+  &:disabled {
+    color: #fff;
+    background-color: #282c34;
+    opacity: 0.2;
+    cursor: default;
+  }
+}
+
+.next-button {
+  margin-left: 2vw;
+}

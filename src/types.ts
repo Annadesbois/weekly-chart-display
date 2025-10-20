@@ -13,3 +13,10 @@ export type SightingsChartProps = {
 export type CustomTooltipComponentProps = TooltipProps<number, string> & {
   missingDates: Set<string>;
 };
+
+export type WeekNavigationProps = {
+  currentWeek: number;
+  totalWeeks: number;
+  onPrevious: () => void;
+  onNext: () => void;
+};
