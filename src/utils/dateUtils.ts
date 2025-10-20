@@ -67,3 +67,12 @@ export const fillMissingDates = (
 
   return { filledData, missingDates };
 };
+
+// Helper to split data into weeks (Monday to Sunday)
+export const splitIntoWeeks = (data: RobinSightings[]): RobinSightings[][] => {
+  const weeks: RobinSightings[][] = [];
+  for (let i = 0; i < data.length; i += 7) {
+    weeks.push(data.slice(i, i + 7));
+  }
+  return weeks;
+};
