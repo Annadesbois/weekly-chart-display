@@ -1,6 +1,8 @@
 import robin from "./assets/robin.png";
+import { useRobinData } from "./hooks/useRobinData";
 
 const App = () => {
+  const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
   return (
     <div className="app">
       <img src={robin} className="robin-image" alt="robin" />
@@ -9,6 +11,7 @@ const App = () => {
         A simple visual record of how often a robin has been spotted from the
         office window.
       </p>
+      {loading && <p>Loading sightings...</p>}
     </div>
   );
 };
