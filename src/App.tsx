@@ -2,13 +2,22 @@ import { useState } from "react";
 import robin from "./assets/robin.png";
 import { useRobinData } from "./hooks/useRobinData";
 import { SightingsChart } from "./components/SightingsChart";
+import { WeekNavigation } from "./components/WeekNavigation";
 
-const App = () => {
+function App() {
   const [fetchData, setFetchData] = useState<number>(0);
   const [currentWeek, setCurrentWeek] = useState(0);
 
   const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
-console.log(missingDates);
+
+  const handlePreviousWeek = () => {
+    setCurrentWeek((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeek((prev) => Math.min(prev + 1, weeklyData.length - 1));
+  };
+
   return (
     <div className="app">
       <img src={robin} className="robin-image" alt="robin" />
@@ -17,6 +26,7 @@ console.log(missingDates);
         A simple visual record of how often a robin has been spotted from the
         office window.
       </p>
+
       {loading && <p>Loading sightings...</p>}
       {error && (
         <p>
@@ -38,10 +48,17 @@ console.log(missingDates);
             data={weeklyData[currentWeek]}
             missingDates={missingDates}
           />
+
+          <WeekNavigation
+            currentWeek={currentWeek}
+            totalWeeks={weeklyData.length}
+            onPrevious={handlePreviousWeek}
+            onNext={handleNextWeek}
+          />
         </>
       )}
     </div>
   );
-};
+}
 
 export default App;
