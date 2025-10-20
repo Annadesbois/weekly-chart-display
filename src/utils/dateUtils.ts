@@ -51,7 +51,8 @@ export const fillMissingDates = (
   const filledData: RobinSightings[] = [];
   const current = new Date(startDate);
 
-  while (current <= endDate) {
+  let iterations = 0;
+  while (current <= endDate && iterations < 100) {
     const formatted = formatDate(current);
     const sightings = dataMap.get(formatted);
     if (sightings === undefined) {
@@ -61,6 +62,7 @@ export const fillMissingDates = (
       filledData.push({ date: formatted, sightings });
     }
     current.setDate(current.getDate() + 1);
+    iterations++;
   }
 
   return { filledData, missingDates };
