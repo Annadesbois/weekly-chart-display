@@ -8,7 +8,7 @@ const App = () => {
   const [currentWeek, setCurrentWeek] = useState(0);
 
   const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
-
+console.log(missingDates);
   return (
     <div className="app">
       <img src={robin} className="robin-image" alt="robin" />

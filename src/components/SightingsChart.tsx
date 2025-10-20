@@ -1,10 +1,13 @@
+import { TooltipProps } from "recharts";
 import { SightingsChartProps } from "../types";
+import { CustomTooltip } from "./CustomTooltip";
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
   CartesianGrid,
+  Tooltip,
   Legend,
   ResponsiveContainer,
 } from "recharts";
@@ -24,6 +27,11 @@ export const SightingsChart = ({ data, missingDates }: SightingsChartProps) => {
             tick={{ fontSize: 16, fill: "#666" }}
           />
           <YAxis allowDecimals={false} />
+          <Tooltip<number, string>
+            content={(tooltipProps: TooltipProps<number, string>) => (
+              <CustomTooltip {...tooltipProps} missingDates={missingDates} />
+            )}
+          />
           <Legend />
           <Line
             type="monotone"

@@ -19,7 +19,21 @@ body {
   padding-right: 5vw;
 }
 
-.robin {
+.robin-image {
   height: 10vmin;
   pointer-events: none;
+}
+
+.chart {
+  width: 80%;
+  max-width: 800px;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
+.custom-tooltip {
+  background-color: #2d302e;
+  padding: 5px;
+  border: 1px solid #ccc;
+  font-size: medium;
 }
