@@ -1,9 +1,12 @@
 import { useState } from "react";
 import robin from "./assets/robin.png";
 import { useRobinData } from "./hooks/useRobinData";
+import { SightingsChart } from "./components/SightingsChart";
 
 const App = () => {
   const [fetchData, setFetchData] = useState<number>(0);
+  const [currentWeek, setCurrentWeek] = useState(0);
+
   const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
 
   return (
@@ -25,6 +28,17 @@ const App = () => {
             Reload
           </button>
         </p>
+      )}
+
+      {weeklyData.length > 0 && (
+        <>
+          <h3>Week {currentWeek + 1}</h3>
+
+          <SightingsChart
+            data={weeklyData[currentWeek]}
+            missingDates={missingDates}
+          />
+        </>
       )}
     </div>
   );
