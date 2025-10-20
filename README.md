@@ -76,7 +76,7 @@ src/
 │
 ├─ types.ts # Shared TypeScript types
 ├─ App.tsx # Root component
-├─ App.css # Styling
+├─ index.css # Styling
 
 ## How It Works
 
@@ -103,6 +103,13 @@ The application includes robust error handling:
 - User-friendly error messages when data fails to load
 - Reload button for easy recovery
 - Graceful fallback states to maintain user experience
+
+### Testing - TODO
+
+These are not yet set up, they are the next things I want to integrate.
+
+- **Write unit tests**: Create \*.test.tsx files (e.g., in a **tests**/ folder) to verify individual components and utility functions using render, screen, and user-event helpers
+- **Write integration tests**: Test how multiple components and hooks work together to ensure the full data-fetching and rendering flow behaves correctly under realistic user interactions
 
 ## Available Scripts
 
