@@ -62,6 +62,7 @@ body {
     background-color: #fff;
     color: #282c34;
   }
+  
   &:disabled {
     color: #fff;
     background-color: #282c34;
