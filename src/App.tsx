@@ -5,17 +5,15 @@ import { SightingsChart } from "./components/SightingsChart";
 import { WeekNavigation } from "./components/WeekNavigation";
 
 function App() {
-  const [fetchData, setFetchData] = useState<number>(0);
-  const [currentWeek, setCurrentWeek] = useState(0);
-
-  const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+  const { weeklyData, loading, error, missingDates, reload } = useRobinData();
 
   const handlePreviousWeek = () => {
-    setCurrentWeek((prev) => Math.max(prev - 1, 0));
+    setCurrentWeekIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleNextWeek = () => {
-    setCurrentWeek((prev) => Math.min(prev + 1, weeklyData.length - 1));
+    setCurrentWeekIndex((prev) => Math.min(prev + 1, weeklyData.length - 1));
   };
 
   return (
@@ -33,7 +31,7 @@ function App() {
           Failed to load data, please refresh the page{" "}
           <button
             className="reload-button"
-            onClick={() => setFetchData(fetchData + 1)}
+            onClick={reload}
           >
             Reload
           </button>
@@ -42,15 +40,15 @@ function App() {
 
       {weeklyData.length > 0 && (
         <>
-          <h3>Week {currentWeek + 1}</h3>
+          <h3>Week {currentWeekIndex + 1}</h3>
 
           <SightingsChart
-            data={weeklyData[currentWeek]}
+            data={weeklyData[currentWeekIndex]}
             missingDates={missingDates}
           />
 
           <WeekNavigation
-            currentWeek={currentWeek}
+            currentWeek={currentWeekIndex}
             totalWeeks={weeklyData.length}
             onPrevious={handlePreviousWeek}
             onNext={handleNextWeek}
