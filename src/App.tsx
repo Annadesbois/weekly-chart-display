@@ -21,8 +21,7 @@ function App() {
       <img src={robin} className="robin-image" alt="robin" />
       <h2>Robin Sightings</h2>
       <p>
-        A simple visual record of how often a robin has been spotted from the
-        office window.
+        A simple visual record of how often a robin has been spotted from the office window.
       </p>
 
       {loading && (
