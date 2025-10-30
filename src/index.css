@@ -19,6 +19,13 @@ body {
   padding-right: 5vw;
 }
 
+@media (max-width: 600px) {
+  .app {
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+}
+
 .robin-image {
   height: 10vmin;
   pointer-events: none;
@@ -48,7 +55,9 @@ body {
   border-radius: 7px;
   background-color: #282c34;
   padding: 5px;
+  margin-top: 16px;
   cursor: pointer;
+
   &:hover {
     background-color: #fff;
     color: #282c34;
@@ -63,4 +72,38 @@ body {
 
 .next-button {
   margin-left: 2vw;
+}
+
+.status-message {
+  margin-top: 1rem;
+}
+
+.loading-message {
+  color: #22c55e;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #22c55e;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }

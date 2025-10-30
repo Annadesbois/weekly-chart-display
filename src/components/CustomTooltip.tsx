@@ -6,16 +6,15 @@ export const CustomTooltip = ({
   label,
   missingDates,
 }: CustomTooltipComponentProps) => {
-  if (active && payload && payload.length) {
-    const sighting = payload[0].value;
-    const isMissing = missingDates.has(label || "");
+  if (!active || !payload || payload.length === 0) return null;
 
-    return (
-      <div className="custom-tooltip">
-        <p>{`Date: ${label}`}</p>
-        <p>{`Sightings: ${isMissing ? "no data" : sighting}`}</p>
-      </div>
-    );
-  }
-  return null;
+  const sighting = payload[0].value;
+  const isMissing = missingDates.has(label || "");
+
+  return (
+    <div className="custom-tooltip">
+      <p>{`Date: ${label}`}</p>
+      <p>{`Sightings: ${isMissing ? "no data" : sighting}`}</p>
+    </div>
+  );
 };

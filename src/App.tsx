@@ -5,21 +5,19 @@ import { SightingsChart } from "./components/SightingsChart";
 import { WeekNavigation } from "./components/WeekNavigation";
 
 function App() {
-  const [fetchData, setFetchData] = useState<number>(0);
-  const [currentWeek, setCurrentWeek] = useState(0);
-
-  const { weeklyData, loading, error, missingDates } = useRobinData(fetchData);
+  const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
+  const { weeklyData, loading, error, missingDates, reload } = useRobinData();
 
   const handlePreviousWeek = () => {
-    setCurrentWeek((prev) => Math.max(prev - 1, 0));
+    setCurrentWeekIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleNextWeek = () => {
-    setCurrentWeek((prev) => Math.min(prev + 1, weeklyData.length - 1));
+    setCurrentWeekIndex((prev) => Math.min(prev + 1, weeklyData.length - 1));
   };
 
   return (
-    <div className="app">
+    <main className="app">
       <img src={robin} className="robin-image" alt="robin" />
       <h2>Robin Sightings</h2>
       <p>
@@ -27,37 +25,42 @@ function App() {
         office window.
       </p>
 
-      {loading && <p>Loading sightings...</p>}
+      {loading && (
+        <div className="status-inner" aria-live="polite">
+          <div className="spinner" aria-hidden="true"></div>
+          <p className="status-text loading-message">Loading sightings…</p>
+        </div>
+      )}
+
       {error && (
-        <p>
-          Failed to load data, please refresh the page{" "}
-          <button
-            className="reload-button"
-            onClick={() => setFetchData(fetchData + 1)}
-          >
+        <>
+          <p aria-live="assertive" className="status-message error-message">
+            Failed to load data, please refresh the page
+          </p>
+          <button className="reload-button" onClick={reload}>
             Reload
           </button>
-        </p>
+        </>
       )}
 
       {weeklyData.length > 0 && (
         <>
-          <h3>Week {currentWeek + 1}</h3>
+          <h3>Week {currentWeekIndex + 1}</h3>
 
           <SightingsChart
-            data={weeklyData[currentWeek]}
+            data={weeklyData[currentWeekIndex]}
             missingDates={missingDates}
           />
 
           <WeekNavigation
-            currentWeek={currentWeek}
+            currentWeek={currentWeekIndex}
             totalWeeks={weeklyData.length}
             onPrevious={handlePreviousWeek}
             onNext={handleNextWeek}
           />
         </>
       )}
-    </div>
+    </main>
   );
 }
 
