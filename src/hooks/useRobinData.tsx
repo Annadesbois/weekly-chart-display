@@ -9,7 +9,7 @@ export const useRobinData = () => {
   const [missingDates, setMissingDates] = useState<Set<string>>(new Set());
 
   const url =
-    "https://my-json-server.typicode.com/Louis-Procode/ufo-Sightings/ufoSightings";
+    "https://raw.githubusercontent.com/Annadesbois/robin-data/refs/heads/main/robinSightings.json";
 
   const fetchSightings = useCallback(async () => {
     try {
