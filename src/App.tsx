@@ -17,7 +17,7 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <main className="app">
       <img src={robin} className="robin-image" alt="robin" />
       <h2>Robin Sightings</h2>
       <p>
@@ -25,17 +25,22 @@ function App() {
         office window.
       </p>
 
-      {loading && <p>Loading sightings...</p>}
+      {loading && (
+        <div className="status-inner" aria-live="polite">
+          <div className="spinner" aria-hidden="true"></div>
+          <p className="status-text loading-message">Loading sightings…</p>
+        </div>
+      )}
+
       {error && (
-        <p>
-          Failed to load data, please refresh the page{" "}
-          <button
-            className="reload-button"
-            onClick={reload}
-          >
+        <>
+          <p aria-live="assertive" className="status-message error-message">
+            Failed to load data, please refresh the page
+          </p>
+          <button className="reload-button" onClick={reload}>
             Reload
           </button>
-        </p>
+        </>
       )}
 
       {weeklyData.length > 0 && (
@@ -55,7 +60,7 @@ function App() {
           />
         </>
       )}
-    </div>
+    </main>
   );
 }
 
