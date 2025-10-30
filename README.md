@@ -31,15 +31,14 @@ The app automatically fills missing dates, groups data by week, and provides sim
 
 - Node.js (version 14 or higher)
 - npm or yarn package manager
-- TypeScript knowledge for development and customisation
 
 ### Installation
 
 1. Clone the repository:
 
 ```bash
-git clone chart-display
-cd weekly-sightings-chart
+git clone https://github.com/Annadesbois/weekly-chart-display
+cd weekly-chart-display
 ```
 
 2. Install dependencies:
@@ -49,6 +48,9 @@ npm install
 # or
 yarn install
 ```
+
+> **💡 Note**: If you’re switching from npm to Yarn, delete the existing `package-lock.json` file first.  
+> Yarn uses its own `yarn.lock` file, and having both can cause conflicts.
 
 3. Start the development server:
 
@@ -85,7 +87,7 @@ src/
 ### Data Processing
 
 1. **Fetching**: useRobinData() fetches raw data from a JSON endpoint
-2. **Normalisation**: fillMissingDates() fills any missing days and aligns weeks to Monday–Sunday
+2. **Normalisation**: fillMissingDates() sorts entries by date, fills any missing calendar days with sightings: 0, and extends the range so complete weeks run Monday to Sunday
 3. **Transformation**: splitIntoWeeks() groups the data into 7-day arrays
 4. **Display**: App.tsx renders a <SightingsChart /> for the current week and provides <WeekNavigation /> buttons
 
@@ -134,10 +136,6 @@ These are not yet set up, they are the next things I want to integrate.
 - Multiple chart types (line, bar, area)
 - Data filtering and search capabilities
 - Mobile-responsive optimisations
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Support
 
