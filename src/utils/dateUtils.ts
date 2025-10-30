@@ -52,6 +52,7 @@ export const fillMissingDates = (
   const current = new Date(startDate);
 
   let iterations = 0;
+  // Safety guard: cap iterations at 100 to prevent infinite loops if date logic ever fails
   while (current <= endDate && iterations < 100) {
     const formatted = formatDate(current);
     const sightings = dataMap.get(formatted);
