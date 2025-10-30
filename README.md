@@ -29,8 +29,8 @@ The app automatically fills missing dates, groups data by week, and provides sim
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
-- npm or yarn package manager
+- **Node.js** — version **18 or higher** (the project was developed and tested with **Node 22.12.0**)
+- **npm** (included with Node) or **yarn** — to install dependencies
 
 ### Installation
 
@@ -55,9 +55,9 @@ yarn install
 3. Start the development server:
 
 ```bash
-npm start
+npm run dev
 # or
-yarn start
+yarn dev
 ```
 
 4. Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
@@ -115,11 +115,10 @@ These are not yet set up, they are the next things I want to integrate.
 
 ## Available Scripts
 
-- `npm start`: Runs the app in development mode
-- `npm test`: Launches the test runner
-- `npm run build`: Builds the app for production
-- `npm run type-check`: Run TypeScript type checking
-- `npm run eject`: Ejects from Create React App (one-way operation)
+- `npm run dev` — Starts the development server (Vite)
+- `npm run build` — Builds the app for production
+- `npm run preview` — Serves the production build locally for testing
+- `npm run lint` — Runs ESLint to check for code issues
 
 ## Contributing
 
