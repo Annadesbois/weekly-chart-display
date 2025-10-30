@@ -50,6 +50,7 @@ body {
   padding: 5px;
   margin-top: 16px;
   cursor: pointer;
+
   &:hover {
     background-color: #fff;
     color: #282c34;
