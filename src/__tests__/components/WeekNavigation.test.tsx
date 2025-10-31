@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { describe, test, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { WeekNavigation } from "@/components/WeekNavigation";
 

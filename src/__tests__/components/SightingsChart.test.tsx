@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { describe, test, expect, vi } from "vitest";
 import { SightingsChart } from "@/components/SightingsChart";
 import type { RobinSightings } from "@/types";
 
