@@ -2,150 +2,77 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { WeekNavigation } from "@/components/WeekNavigation";
 
+const getPrevBtn = () => screen.getByText("⬅ Previous Week");
+const getNextBtn = () => screen.getByText("Next Week ➡");
+
+const setup = (options: { currentWeek: number; totalWeeks: number }) => {
+  const onPrevious = vi.fn();
+  const onNext = vi.fn();
+
+  render(
+    <WeekNavigation
+      currentWeek={options.currentWeek}
+      totalWeeks={options.totalWeeks}
+      onPrevious={onPrevious}
+      onNext={onNext}
+    />
+  );
+
+  return { onPrevious, onNext };
+};
+
 describe("WeekNavigation", () => {
   test("renders both navigation buttons", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={1}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    expect(screen.getByText("⬅ Previous Week")).toBeInTheDocument();
-    expect(screen.getByText("Next Week ➡")).toBeInTheDocument();
+    setup({ currentWeek: 1, totalWeeks: 5 });
+    expect(getPrevBtn()).toBeInTheDocument();
+    expect(getNextBtn()).toBeInTheDocument();
   });
 
   test("calls onPrevious when Previous Week button is clicked", async () => {
     const user = userEvent.setup();
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
+    const { onPrevious, onNext } = setup({ currentWeek: 2, totalWeeks: 5 });
 
-    render(
-      <WeekNavigation
-        currentWeek={2}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    await user.click(screen.getByText("⬅ Previous Week"));
+    await user.click(getPrevBtn());
     expect(onPrevious).toHaveBeenCalledTimes(1);
     expect(onNext).not.toHaveBeenCalled();
   });
 
   test("calls onNext when Next Week button is clicked", async () => {
     const user = userEvent.setup();
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
+    const { onPrevious, onNext } = setup({ currentWeek: 2, totalWeeks: 5 });
 
-    render(
-      <WeekNavigation
-        currentWeek={2}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    await user.click(screen.getByText("Next Week ➡"));
+    await user.click(getNextBtn());
     expect(onNext).toHaveBeenCalledTimes(1);
     expect(onPrevious).not.toHaveBeenCalled();
   });
 
   test("disables Previous Week button when on first week", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={0}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    const previousButton = screen.getByText("⬅ Previous Week");
-    expect(previousButton).toBeDisabled();
-
-    const nextButton = screen.getByText("Next Week ➡");
-    expect(nextButton).not.toBeDisabled();
+    setup({ currentWeek: 0, totalWeeks: 5 });
+    expect(getPrevBtn()).toBeDisabled();
+    expect(getNextBtn()).not.toBeDisabled();
   });
 
   test("disables Next Week button when on last week", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={4}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    const nextButton = screen.getByText("Next Week ➡");
-    expect(nextButton).toBeDisabled();
-
-    const previousButton = screen.getByText("⬅ Previous Week");
-    expect(previousButton).not.toBeDisabled();
+    setup({ currentWeek: 4, totalWeeks: 5 });
+    expect(getNextBtn()).toBeDisabled();
+    expect(getPrevBtn()).not.toBeDisabled();
   });
 
   test("both buttons enabled when on middle week", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={2}
-        totalWeeks={5}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    expect(screen.getByText("⬅ Previous Week")).not.toBeDisabled();
-    expect(screen.getByText("Next Week ➡")).not.toBeDisabled();
+    setup({ currentWeek: 2, totalWeeks: 5 });
+    expect(getPrevBtn()).not.toBeDisabled();
+    expect(getNextBtn()).not.toBeDisabled();
   });
 
   test("handles single week scenario", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={0}
-        totalWeeks={1}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    expect(screen.getByText("⬅ Previous Week")).toBeDisabled();
-    expect(screen.getByText("Next Week ➡")).toBeDisabled();
+    setup({ currentWeek: 0, totalWeeks: 1 });
+    expect(getPrevBtn()).toBeDisabled();
+    expect(getNextBtn()).toBeDisabled();
   });
 
   test("applies correct CSS classes to buttons", () => {
-    const onPrevious = vi.fn();
-    const onNext = vi.fn();
-
-    render(
-      <WeekNavigation
-        currentWeek={1}
-        totalWeeks={3}
-        onPrevious={onPrevious}
-        onNext={onNext}
-      />
-    );
-
-    expect(screen.getByText("⬅ Previous Week")).toHaveClass("previous-button");
-    expect(screen.getByText("Next Week ➡")).toHaveClass("next-button");
+    setup({ currentWeek: 1, totalWeeks: 3 });
+    expect(getPrevBtn()).toHaveClass("previous-button");
+    expect(getNextBtn()).toHaveClass("next-button");
   });
 });
