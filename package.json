@@ -13,8 +13,7 @@
     "@types/react-dom": "19.1.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "recharts": "2.15.3",
-    "web-vitals": "2.1.4"
+    "recharts": "2.15.3"
   },
   "scripts": {
     "start": "vite",
