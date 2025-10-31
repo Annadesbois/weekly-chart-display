@@ -106,12 +106,41 @@ The application includes robust error handling:
 - Reload button for easy recovery
 - Graceful fallback states to maintain user experience
 
-### Testing - TODO
+## Testing
 
-These are not yet set up, they are the next things I want to integrate.
+All key parts of the app are now covered by unit and integration tests using **Vitest** and **React Testing Library**.
 
-- **Write unit tests**: Create \*.test.tsx files (e.g., in a **tests**/ folder) to verify individual components and utility functions using render, screen, and user-event helpers
-- **Write integration tests**: Test how multiple components and hooks work together to ensure the full data-fetching and rendering flow behaves correctly under realistic user interactions
+### ✅ Unit tests
+
+- **Components**
+
+  - `WeekNavigation`: button states, click handlers, and boundary conditions
+  - `SightingsChart`: correct data flow to Recharts components, structure validation, and handling of empty or single-point data
+  - `CustomTooltip`: renders label/value correctly, handles inactive state and missing data gracefully
+
+- **Hooks**
+
+  - `useRobinData`: tested for loading, success, error, retry, and data-processing behaviour (date filling, week splitting, and missing-date detection)
+
+- **Utilities**
+  - `dateUtils`: unit tests for `parseDate`, `formatDate`, `fillMissingDates`, and `splitIntoWeeks`, ensuring correct date parsing, formatting, range filling, and week chunking
+
+### ✅ Integration tests
+
+- **App integration**
+  - Tests the full flow from fetching remote data to rendering charts and navigation
+  - Covers happy path, error → reload → success flow, empty dataset handling, and week navigation interactions
+  - Uses mocked `fetch` and lightweight `recharts` components for stable, deterministic results
+
+### Tooling
+
+- Framework: [**Vitest**](https://vitest.dev/)
+- Testing utilities: [**@testing-library/react**](https://testing-library.com/docs/react-testing-library/intro/) and [**@testing-library/user-event**](https://testing-library.com/docs/user-event/intro/)
+- All tests can be run with:
+
+  ```bash
+  npm test
+  ```
 
 ## Available Scripts
 
