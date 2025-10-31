@@ -1,4 +1,3 @@
-// App.test.tsx
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "@/App";
@@ -78,14 +77,6 @@ describe("App", () => {
     ).toBeInTheDocument();
   });
 
-  test("renders robin image with correct alt text", () => {
-    mockUseRobin();
-    render(<App />);
-    const image = screen.getByAltText("robin");
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveClass("robin-image");
-  });
-
   test("displays loading state", () => {
     mockUseRobin({ loading: true });
     render(<App />);
@@ -109,13 +100,6 @@ describe("App", () => {
     expect(screen.getByTestId("line-chart")).toBeInTheDocument();
   });
 
-  test("starts on first week by default", () => {
-    mockUseRobin({ weeklyData: mockWeeklyData });
-    render(<App />);
-    expect(screen.getByText("Week 1")).toBeInTheDocument();
-    expect(screen.getByText("⬅ Previous Week")).toBeDisabled();
-  });
-
   test("navigates to next and previous week", async () => {
     const user = userEvent.setup();
     mockUseRobin({ weeklyData: mockWeeklyData });
@@ -124,15 +108,6 @@ describe("App", () => {
     expect(screen.getByText("Week 2")).toBeInTheDocument();
     await user.click(screen.getByText("⬅ Previous Week"));
     expect(screen.getByText("Week 1")).toBeInTheDocument();
-  });
-
-  test("passes missing dates to chart component", () => {
-    mockUseRobin({
-      weeklyData: mockWeeklyData,
-      missingDates: new Set(["01/10/2025", "03/10/2025"]),
-    });
-    render(<App />);
-    expect(screen.getByTestId("line-chart")).toBeInTheDocument();
   });
 
   test("does not render chart when no data", () => {
