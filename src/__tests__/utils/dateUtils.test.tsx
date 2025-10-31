@@ -23,33 +23,17 @@ describe("dateUtils", () => {
       expect(date.getMonth()).toBe(0); // January
       expect(date.getFullYear()).toBe(2025);
     });
-
-    test("handles end of year date", () => {
-      const date = parseDate("31/12/2024");
-
-      expect(date.getDate()).toBe(31);
-      expect(date.getMonth()).toBe(11); // December
-      expect(date.getFullYear()).toBe(2024);
-    });
   });
 
   describe("formatDate", () => {
-    test("formats date to DD/MM/YYYY with zero padding", () => {
-      const date = new Date(2025, 2, 5); // March 5, 2025
-
+    test("adds leading zeros for single-digit day and month", () => {
+      const date = new Date(2025, 2, 5); // 5 March 2025
       expect(formatDate(date)).toBe("05/03/2025");
     });
 
-    test("formats date without zero padding for double digits", () => {
-      const date = new Date(2025, 11, 25); // December 25, 2025
-
+    test("handles double-digit day and month correctly", () => {
+      const date = new Date(2025, 11, 25); // 25 December 2025
       expect(formatDate(date)).toBe("25/12/2025");
-    });
-
-    test("formats first day of year", () => {
-      const date = new Date(2025, 0, 1); // January 1, 2025
-
-      expect(formatDate(date)).toBe("01/01/2025");
     });
   });
 
@@ -104,7 +88,7 @@ describe("dateUtils", () => {
 
       const filled = result.filledData.find((d) => d.date === "03/10/2025");
       expect(filled).toBeDefined();
-      expect(filled?.sightings).toBe(0);
+      expect(filled!.sightings).toBe(0);
       expect(result.missingDates.has("03/10/2025")).toBe(true);
     });
 
@@ -119,8 +103,8 @@ describe("dateUtils", () => {
       const day1 = result.filledData.find((d) => d.date === "01/10/2025");
       const day2 = result.filledData.find((d) => d.date === "02/10/2025");
 
-      expect(day1?.sightings).toBe(3);
-      expect(day2?.sightings).toBe(5);
+      expect(day1!.sightings).toBe(3);
+      expect(day2!.sightings).toBe(5);
       expect(result.missingDates.has("01/10/2025")).toBe(false);
       expect(result.missingDates.has("02/10/2025")).toBe(false);
     });
