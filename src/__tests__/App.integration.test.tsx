@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "@/App";
 import type { RobinSightings } from "@/types";
-import type { Mock } from "vitest";
 
 vi.mock("recharts", () => ({
   ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
@@ -27,21 +26,31 @@ const apiData: RobinSightings[] = [
   { date: "07/10/2025", sightings: 4 },
 ];
 
+// --- Reusable helpers ---
+const mockFetchSuccess = (data: unknown = apiData) => {
+  global.fetch = vi.fn(() =>
+    Promise.resolve(
+      new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      })
+    )
+  ) as unknown as typeof fetch;
+};
+
+const mockFetchError = (status = 500) => {
+  global.fetch = vi.fn(() =>
+    Promise.resolve(new Response(null, { status }))
+  ) as unknown as typeof fetch;
+};
+
 beforeEach(() => {
   vi.clearAllMocks();
 });
 
 describe("App integration", () => {
   test("happy path: shows loading, then week 1 with chart and nav", async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve(
-        new Response(JSON.stringify(apiData), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      )
-    ) as unknown as typeof fetch;
-
+    mockFetchSuccess();
     render(<App />);
 
     expect(screen.getByText(/loading sightings/i)).toBeInTheDocument();
@@ -58,46 +67,29 @@ describe("App integration", () => {
   test("error → reload → success", async () => {
     const user = userEvent.setup();
 
-    // First response: server error
-    global.fetch = vi.fn(() =>
-      Promise.resolve(new Response(null, { status: 500 }))
-    ) as unknown as typeof fetch;
-
+    mockFetchError(500);
     render(<App />);
 
     await waitFor(() => {
       expect(screen.getByText(/failed to load data/i)).toBeInTheDocument();
     });
 
-    // Second response: success
-    (global.fetch as Mock).mockResolvedValueOnce(
-      new Response(JSON.stringify(apiData), {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      })
-    );
+    // Success on reload
+    mockFetchSuccess();
 
     await user.click(screen.getByRole("button", { name: /reload/i }));
 
     await waitFor(() => {
       expect(screen.getByText("Week 1")).toBeInTheDocument();
     });
-    expect(screen.queryByText(/failed to load data/i)).not.toBeInTheDocument();
 
+    expect(screen.queryByText(/failed to load data/i)).not.toBeInTheDocument();
   });
 
   test("basic navigation: next then previous updates week label", async () => {
     const user = userEvent.setup();
 
-    global.fetch = vi.fn(() =>
-      Promise.resolve(
-        new Response(JSON.stringify(apiData), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      )
-    ) as unknown as typeof fetch;
-
+    mockFetchSuccess();
     render(<App />);
 
     await waitFor(() => {
@@ -112,15 +104,7 @@ describe("App integration", () => {
   });
 
   test("no data: hides chart and week heading, shows title", async () => {
-    global.fetch = vi.fn(() =>
-      Promise.resolve(
-        new Response(JSON.stringify([]), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        })
-      )
-    ) as unknown as typeof fetch;
-
+    mockFetchSuccess([]);
     render(<App />);
 
     await waitFor(() => {
