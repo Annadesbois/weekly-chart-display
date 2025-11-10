@@ -64,6 +64,7 @@ yarn dev
 
 ## Project Structure
 
+```text
 src/
 ├─ components/
 │ ├─ CustomTooltip.tsx # Custom tooltip for chart hover
@@ -79,6 +80,7 @@ src/
 ├─ types.ts # Shared TypeScript types
 ├─ App.tsx # Root component
 ├─ index.css # Styling
+```
 
 ## How It Works
 
@@ -128,9 +130,9 @@ All key parts of the app are now covered by unit and integration tests using **V
 ### ✅ Integration tests
 
 - **App integration**
-  - Tests the full flow from fetching remote data to rendering charts and navigation
+  - Verifies the end-to-end UI flow-from loading state to chart rendering and week navigation—using mocked data
   - Covers happy path, error → reload → success flow, empty dataset handling, and week navigation interactions
-  - Uses mocked `fetch` and lightweight `recharts` components for stable, deterministic results
+  - Uses mocked `fetch` and `recharts` components for stable, deterministic results
 
 ### Tooling
 
@@ -148,14 +150,6 @@ All key parts of the app are now covered by unit and integration tests using **V
 - `npm run build` — Builds the app for production
 - `npm run preview` — Serves the production build locally for testing
 - `npm run lint` — Runs ESLint to check for code issues
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## Future Enhancements
 
