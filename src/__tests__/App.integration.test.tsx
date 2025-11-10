@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import App from "@/App";
 import type { RobinSightings } from "@/types";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("recharts", () => ({
   ResponsiveContainer: ({ children }: { children: React.ReactNode }) => (
