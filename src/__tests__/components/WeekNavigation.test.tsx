@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { WeekNavigation } from "@/components/WeekNavigation";
+import userEvent from "@testing-library/user-event";
 
 const getPrevBtn = () => screen.getByText("⬅ Previous Week");
 const getNextBtn = () => screen.getByText("Next Week ➡");
