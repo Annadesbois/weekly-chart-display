@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import { SightingsChart } from "@/components/SightingsChart";
+
 import type { RobinSightings } from "@/types";
+import { SightingsChart } from "@/components/SightingsChart";
 
 // Mock recharts components to avoid canvas rendering issues in tests
 vi.mock("recharts", () => {
