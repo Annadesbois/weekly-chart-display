@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
-import { RobinSightings } from "../types";
 import { fillMissingDates, splitIntoWeeks } from "../utils/dateUtils";
+import { useCallback, useEffect, useState } from "react";
+
+import { RobinSightings } from "../types";
 
 export const useRobinData = () => {
   const [weeklyData, setWeeklyData] = useState<RobinSightings[][]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(false);
   const [missingDates, setMissingDates] = useState<Set<string>>(new Set());
 
   const url =
@@ -14,7 +15,7 @@ export const useRobinData = () => {
   const fetchSightings = useCallback(async () => {
     try {
       setLoading(true);
-      setError(null);
+      setError(false);
 
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP error, status: ${res.status}`);
@@ -27,8 +28,8 @@ export const useRobinData = () => {
 
       setWeeklyData(weeks);
       setMissingDates(missingDates);
-    } catch (err) {
-      setError((err as Error).message || "Unknown error");
+    } catch {
+      setError(true);
     } finally {
       setLoading(false);
     }

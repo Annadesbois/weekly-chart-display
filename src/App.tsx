@@ -4,7 +4,7 @@ import robin from "./assets/robin.png";
 import { useRobinData } from "./hooks/useRobinData";
 import { useState } from "react";
 
-function App() {
+const App = () => {
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const { weeklyData, loading, error, missingDates, reload } = useRobinData();
 

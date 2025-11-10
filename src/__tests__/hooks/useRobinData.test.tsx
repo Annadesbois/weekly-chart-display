@@ -42,7 +42,7 @@ describe("useRobinData", () => {
     test("successfully fetches and processes data", async () => {
       const result = await renderLoaded();
 
-      expect(result.current.error).toBeNull();
+      expect(result.current.error).toBe(false);
       expect(result.current.weeklyData.length).toBeGreaterThan(0);
       expect(Array.isArray(result.current.weeklyData[0])).toBe(true);
     });
@@ -102,7 +102,7 @@ describe("useRobinData", () => {
       const { result } = renderHook(() => useRobinData());
       await waitFor(() => expect(result.current.loading).toBe(false));
 
-      expect(result.current.error).toBe("Network error");
+      expect(result.current.error).toBe(true);
       expect(result.current.weeklyData).toEqual([]);
     });
 
@@ -119,7 +119,7 @@ describe("useRobinData", () => {
 
       expect(result.current.weeklyData).toEqual([]);
       expect(result.current.missingDates.size).toBe(0);
-      expect(result.current.error).toBeNull();
+      expect(result.current.error).toBe(false);
     });
   });
 });
