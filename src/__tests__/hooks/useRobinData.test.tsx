@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useRobinData } from "@/hooks/useRobinData";
+
 import type { RobinSightings } from "@/types";
+import { useRobinData } from "@/hooks/useRobinData";
 
 const mockRawData: RobinSightings[] = [
   { date: "30/09/2025", sightings: 2 },
@@ -9,8 +10,14 @@ const mockRawData: RobinSightings[] = [
   { date: "03/10/2025", sightings: 1 },
 ];
 
+const originalFetch = global.fetch;
+
 beforeEach(() => {
   vi.clearAllMocks();
+});
+
+afterAll(() => {
+  global.fetch = originalFetch;
 });
 
 describe("useRobinData", () => {
