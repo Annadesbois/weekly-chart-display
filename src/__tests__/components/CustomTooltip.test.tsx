@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+
 import { CustomTooltip } from "@/components/CustomTooltip";
 import type { TooltipProps } from "recharts";
 
@@ -7,20 +8,32 @@ type TooltipPayloadArray = NonNullable<TooltipProps<number, string>["payload"]>;
 
 // Helper to create a fake payload for testing
 const createTooltipPayload = (...values: number[]): TooltipPayloadArray =>
-  values.map((v) => ({ value: v })) as unknown as TooltipPayloadArray;
+  values.map((v) => ({ value: v }));
 
-const renderTooltip = ({
-  active = true,
-  label = "01/10/2025",
-  value = 3,
-  missingDates = new Set<string>(),
-  payload = createTooltipPayload(value),
-} = {}) => {
+type TooltipOptions = {
+  active?: boolean;
+  label?: string;
+  value?: number;
+  missingDates?: Set<string>;
+  payload?: TooltipPayloadArray;
+};
+
+const renderTooltip = (options: TooltipOptions = {}) => {
+  const {
+    active = true,
+    label = "01/10/2025",
+    value = 3,
+    missingDates = new Set<string>(),
+    payload,
+  } = options;
+
+  const finalPayload = payload ?? createTooltipPayload(value);
+
   return render(
     <CustomTooltip
       active={active}
-      label={label as TooltipProps<number, string>["label"]}
-      payload={payload}
+      label={label}
+      payload={finalPayload}
       missingDates={missingDates}
     />
   );
