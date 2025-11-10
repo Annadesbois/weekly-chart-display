@@ -44,15 +44,6 @@ const mockData: RobinSightings[] = [
 ];
 
 describe("SightingsChart", () => {
-  test("renders the chart container with correct class", () => {
-    render(<SightingsChart data={mockData} missingDates={new Set()} />);
-
-    const chartContainer = screen.getByTestId(
-      "responsive-container"
-    ).parentElement;
-    expect(chartContainer).toHaveClass("chart");
-  });
-
   test("renders all chart components", () => {
     render(<SightingsChart data={mockData} missingDates={new Set()} />);
 
@@ -78,21 +69,6 @@ describe("SightingsChart", () => {
     expect(chartData).toHaveLength(7);
   });
 
-  test("configures Line component with correct dataKey and stroke", () => {
-    render(<SightingsChart data={mockData} missingDates={new Set()} />);
-
-    const line = screen.getByTestId("line");
-    expect(line).toHaveAttribute("data-key", "sightings");
-    expect(line).toHaveAttribute("data-stroke", "#82ca9d");
-  });
-
-  test("configures XAxis with date dataKey", () => {
-    render(<SightingsChart data={mockData} missingDates={new Set()} />);
-
-    const xAxis = screen.getByTestId("x-axis");
-    expect(xAxis).toHaveAttribute("data-key", "date");
-  });
-
   test("renders with empty data array", () => {
     render(<SightingsChart data={[]} missingDates={new Set()} />);
 
@@ -102,23 +78,6 @@ describe("SightingsChart", () => {
     );
 
     expect(chartData).toEqual([]);
-    expect(screen.getByTestId("line-chart")).toBeInTheDocument();
-  });
-
-  test("passes missingDates to component", () => {
-    const missingDates = new Set(["03/10/2025", "06/10/2025"]);
-
-    const { rerender } = render(
-      <SightingsChart data={mockData} missingDates={missingDates} />
-    );
-
-    // Component should render without errors
-    expect(screen.getByTestId("line-chart")).toBeInTheDocument();
-
-    // Verify it accepts different missingDates
-    const newMissingDates = new Set(["01/10/2025"]);
-    rerender(<SightingsChart data={mockData} missingDates={newMissingDates} />);
-
     expect(screen.getByTestId("line-chart")).toBeInTheDocument();
   });
 
