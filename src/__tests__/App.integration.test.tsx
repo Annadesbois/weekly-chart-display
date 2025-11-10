@@ -27,7 +27,7 @@ const apiData: RobinSightings[] = [
 ];
 
 // --- Reusable helpers ---
-const mockFetchSuccess = (data: unknown = apiData) => {
+const mockFetchSuccess = (data: RobinSightings[] = apiData) => {
   global.fetch = vi.fn(() =>
     Promise.resolve(
       new Response(JSON.stringify(data), {
