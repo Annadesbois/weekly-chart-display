@@ -1,10 +1,10 @@
-import { useState } from "react";
-import robin from "./assets/robin.png";
-import { useRobinData } from "./hooks/useRobinData";
 import { SightingsChart } from "./components/SightingsChart";
 import { WeekNavigation } from "./components/WeekNavigation";
+import robin from "./assets/robin.png";
+import { useRobinData } from "./hooks/useRobinData";
+import { useState } from "react";
 
-function App() {
+const App = () => {
   const [currentWeekIndex, setCurrentWeekIndex] = useState(0);
   const { weeklyData, loading, error, missingDates, reload } = useRobinData();
 
@@ -21,7 +21,8 @@ function App() {
       <img src={robin} className="robin-image" alt="robin" />
       <h2>Robin Sightings</h2>
       <p>
-        A simple visual record of how often a robin has been spotted from the office window.
+        A simple visual record of how often a robin has been spotted from the
+        office window.
       </p>
 
       {loading && (
@@ -30,7 +31,6 @@ function App() {
           <p className="status-text loading-message">Loading sightings…</p>
         </div>
       )}
-
       {error && (
         <>
           <p aria-live="assertive" className="status-message error-message">

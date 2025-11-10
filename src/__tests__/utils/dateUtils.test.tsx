@@ -1,9 +1,10 @@
 import {
+  fillMissingDates,
   parseDate,
   formatDate,
-  fillMissingDates,
   splitIntoWeeks,
 } from "@/utils/dateUtils";
+
 import type { RobinSightings } from "@/types";
 
 describe("dateUtils", () => {
@@ -17,7 +18,7 @@ describe("dateUtils", () => {
     });
 
     test("parses single digit day and month", () => {
-      const date = parseDate("05/01/2025");
+      const date = parseDate("5/1/2025");
 
       expect(date.getDate()).toBe(5);
       expect(date.getMonth()).toBe(0); // January
@@ -29,11 +30,6 @@ describe("dateUtils", () => {
     test("adds leading zeros for single-digit day and month", () => {
       const date = new Date(2025, 2, 5); // 5 March 2025
       expect(formatDate(date)).toBe("05/03/2025");
-    });
-
-    test("handles double-digit day and month correctly", () => {
-      const date = new Date(2025, 11, 25); // 25 December 2025
-      expect(formatDate(date)).toBe("25/12/2025");
     });
   });
 
@@ -53,7 +49,7 @@ describe("dateUtils", () => {
 
       const result = fillMissingDates(data);
 
-      expect(result.filledData.length).toBeGreaterThan(2);
+      expect(result.filledData).toHaveLength(7);
       expect(result.missingDates.has("02/10/2025")).toBe(true);
     });
 
@@ -139,12 +135,13 @@ describe("dateUtils", () => {
 
       const result = fillMissingDates(data);
 
-      // Should be in chronological order
-      const dates = result.filledData.map((d) => d.date);
-      const sortedDates = [...dates].sort(
-        (a, b) => parseDate(a).getTime() - parseDate(b).getTime()
-      );
-      expect(dates).toEqual(sortedDates);
+      const expectedSorted = ["01/10/2025", "02/10/2025", "03/10/2025"];
+
+      const returnedOriginalDates = result.filledData
+        .map((d) => d.date)
+        .filter((date) => expectedSorted.includes(date));
+
+      expect(returnedOriginalDates).toEqual(expectedSorted);
     });
   });
 

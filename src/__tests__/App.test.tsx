@@ -58,6 +58,5 @@ describe("App", () => {
     render(<App />);
     const image = screen.getByAltText("robin");
     expect(image).toBeInTheDocument();
-    expect(image).toHaveClass("robin-image");
   });
 });

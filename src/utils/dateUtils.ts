@@ -35,6 +35,11 @@ export const fillMissingDates = (
   const firstDate = parseDate(sortedData[0].date);
   const lastDate = parseDate(sortedData[sortedData.length - 1].date);
 
+  // Stop early if the input dates are invalid, prevents bad ranges and infinite loops
+  if (isNaN(firstDate.getTime()) || isNaN(lastDate.getTime())) {
+    throw new Error("Invalid date format in data");
+  }
+
   // Align start date to previous Monday
   const startDate = new Date(firstDate);
   const startDay = startDate.getDay(); // Sunday = 0, Monday = 1, ...
@@ -51,9 +56,7 @@ export const fillMissingDates = (
   const filledData: RobinSightings[] = [];
   const current = new Date(startDate);
 
-  let iterations = 0;
-  // Safety guard: cap iterations at 100 to prevent infinite loops if date logic ever fails
-  while (current <= endDate && iterations < 100) {
+  while (current <= endDate) {
     const formatted = formatDate(current);
     const sightings = dataMap.get(formatted);
     if (sightings === undefined) {
@@ -63,7 +66,6 @@ export const fillMissingDates = (
       filledData.push({ date: formatted, sightings });
     }
     current.setDate(current.getDate() + 1);
-    iterations++;
   }
 
   return { filledData, missingDates };

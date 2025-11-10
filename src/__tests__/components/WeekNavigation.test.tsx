@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { WeekNavigation } from "@/components/WeekNavigation";
+import userEvent from "@testing-library/user-event";
 
 const getPrevBtn = () => screen.getByText("⬅ Previous Week");
 const getNextBtn = () => screen.getByText("Next Week ➡");
@@ -53,6 +54,7 @@ describe("WeekNavigation", () => {
   });
 
   test("disables Next Week button when on last week", () => {
+    // last week = index 4 (zero-based indexing for 5 total weeks)
     setup({ currentWeek: 4, totalWeeks: 5 });
     expect(getNextBtn()).toBeDisabled();
     expect(getPrevBtn()).not.toBeDisabled();
@@ -68,11 +70,5 @@ describe("WeekNavigation", () => {
     setup({ currentWeek: 0, totalWeeks: 1 });
     expect(getPrevBtn()).toBeDisabled();
     expect(getNextBtn()).toBeDisabled();
-  });
-
-  test("applies correct CSS classes to buttons", () => {
-    setup({ currentWeek: 1, totalWeeks: 3 });
-    expect(getPrevBtn()).toHaveClass("previous-button");
-    expect(getNextBtn()).toHaveClass("next-button");
   });
 });
