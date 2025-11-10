@@ -80,8 +80,9 @@ describe("CustomTooltip", () => {
       value,
       missingDates: new Set([label]),
     });
+    const dateText = (label: string) => `Date: ${label}`;
 
-    expect(screen.getByText(`Date: ${label}`)).toBeInTheDocument();
+    expect(screen.getByText(dateText(label))).toBeInTheDocument();
     expect(screen.getByText("Sightings: no data")).toBeInTheDocument();
   });
 });
