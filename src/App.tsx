@@ -26,7 +26,7 @@ const App = () => {
       </p>
 
       {loading && (
-        <div className="status-inner" aria-live="polite">
+        <div className="status-inner">
           <div className="spinner" aria-hidden="true"></div>
           <p className="status-text loading-message">Loading sightings…</p>
         </div>
