@@ -35,13 +35,13 @@ const mockFetchSuccess = (data: RobinSightings[] = apiData) => {
         headers: { "Content-Type": "application/json" },
       })
     )
-  ) as unknown as typeof fetch;
+  );
 };
 
 const mockFetchError = (status = 500) => {
   global.fetch = vi.fn(() =>
     Promise.resolve(new Response(null, { status }))
-  ) as unknown as typeof fetch;
+  );
 };
 
 beforeEach(() => {
