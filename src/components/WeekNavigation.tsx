@@ -10,6 +10,7 @@ export const WeekNavigation = ({
     <div>
       <button
         className="previous-button"
+        data-testid="prev-week-btn"
         onClick={onPrevious}
         disabled={currentWeek === 0}
       >
@@ -18,6 +19,7 @@ export const WeekNavigation = ({
 
       <button
         className="next-button"
+        data-testid="next-week-btn"
         onClick={onNext}
         disabled={currentWeek === totalWeeks - 1}
       >

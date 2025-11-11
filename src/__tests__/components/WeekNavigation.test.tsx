@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 import { WeekNavigation } from "@/components/WeekNavigation";
 import userEvent from "@testing-library/user-event";
 
-const getPrevBtn = () => screen.getByText("⬅ Previous Week");
-const getNextBtn = () => screen.getByText("Next Week ➡");
+const getPrevBtn = () => screen.getByTestId("prev-week-btn");
+const getNextBtn = () => screen.getByTestId("next-week-btn");
 
 const setup = (options: { currentWeek: number; totalWeeks: number }) => {
   const onPrevious = vi.fn();
